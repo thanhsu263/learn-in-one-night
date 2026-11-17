@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SWT301 – Ôn tập gọn (Chương 1–6)</title>
+<style>
+:root{
+  --bg:#f7f7f5; --card:#fff; --ink:#1d1d1f; --mute:#6b6b70; --line:#e3e3e0;
+  --c1:#2563eb; --c2:#0d9488; --c3:#7c3aed; --c4:#ea580c; --c5:#db2777; --c6:#16a34a;
+  --key:#fff7d6; --trap:#fdecec; --trapline:#e5484d;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+nav.top{position:sticky;top:0;z-index:9;background:#111;color:#fff;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 14px}
+nav.top a{color:#fff;text-decoration:none;padding:4px 10px;border-radius:999px;font-weight:600;font-size:13px;background:#2b2b2e}
+nav.top a:hover{background:#444}
+nav.top .sp{flex:1}
+#quiz{border:0;border-radius:999px;padding:5px 12px;font-weight:700;font-size:13px;cursor:pointer;background:#ffd84d;color:#111}
+main{max-width:1060px;margin:0 auto;padding:18px 16px 80px}
+header.hero h1{margin:6px 0 4px;font-size:26px}
+header.hero p{margin:4px 0;color:var(--mute)}
+.how{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 16px;margin:12px 0 4px}
+.how ol{margin:6px 0;padding-left:20px}
+section.ch{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 20px 18px;margin:22px 0;border-top:6px solid var(--cc)}
+section.ch>h2{margin:12px 0 4px;font-size:22px;color:var(--cc)}
+section.ch>h2 small{color:var(--mute);font-weight:500;font-size:14px}
+h3{margin:20px 0 6px;font-size:17px;border-left:4px solid var(--cc);padding-left:8px}
+h4{margin:12px 0 4px;font-size:15px}
+.key{background:var(--key);border-radius:10px;padding:8px 14px;margin:10px 0}
+.key b.t{display:block;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#8a6d00}
+.key ul,.trap ul{margin:4px 0;padding-left:20px}
+.trap{background:var(--trap);border-left:5px solid var(--trapline);border-radius:8px;padding:8px 14px;margin:14px 0}
+.trap b.t{display:block;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--trapline)}
+.trap li{margin:3px 0}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:6px 8px;vertical-align:top;text-align:left}
+th{background:#f0f0ee;font-size:13px}
+table.t td:first-child{font-weight:700;white-space:nowrap}
+table.t td:first-child small{display:block;font-weight:400;color:var(--mute);white-space:normal}
+table.t td:nth-child(3){color:#3b3b40;font-style:italic;font-size:13px}
+.en{font-weight:700}
+.ok{color:#15803d;font-weight:700}
+.no{color:#b91c1c;font-weight:700}
+.mn{display:inline-block;background:#eef2ff;color:#3730a3;border-radius:6px;padding:1px 8px;font-weight:700;font-size:13px}
+code,pre{font-family:Consolas,"Cascadia Mono",monospace;font-size:13px}
+pre{background:#f4f4f2;border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:6px 0;overflow:auto}
+.f{background:#f1f5ff;border:1px solid #c7d4fb;border-radius:10px;padding:8px 14px;margin:8px 0}
+.f div{margin:3px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.flow span{background:#f0f0ee;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-weight:600;font-size:13px}
+.flow i{color:var(--mute);font-style:normal}
+.vm td{text-align:center}
+.vm td.mid{color:var(--mute);border:0}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}table.t td:first-child{white-space:normal}}
+/* Chế độ tự kiểm tra: che cột nghĩa tiếng Việt */
+body.quiz table.t td:nth-child(2){color:transparent;text-shadow:0 0 9px rgba(0,0,0,.55);cursor:pointer;user-select:none}
+body.quiz table.t td:nth-child(2).show{color:inherit;text-shadow:none}
+@media print{
+  nav.top,#quiz,.how{display:none}
+  body{background:#fff;font-size:12px}
+  section.ch{break-before:page;border:0;padding:0}
+  table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+<nav class="top">
+  <a href="#c1">C1 Nguyên lý</a><a href="#c2">C2 Vòng đời</a><a href="#c3">C3 Static</a><a href="#c4">C4 Kỹ thuật</a><a href="#c5">C5 Quản lý</a><a href="#c6">C6 Tool</a><a href="#cf">Công thức</a>
+  <span class="sp"></span>
+  <button id="quiz" title="Che cột nghĩa tiếng Việt, bấm vào ô để lộ đáp án">Tự kiểm tra: TẮT</button>
+</nav>
+<main>
+<header class="hero">
+  <h1>SWT301 – Ôn tập gọn, chương 1–6</h1>
+  <p>Tóm tắt từ slide SWT1–SWT6 (ISTQB Foundation) + các dạng câu hay gặp trên Quizlet. Thuật ngữ giữ tiếng Anh vì đề thi bằng tiếng Anh.</p>
+</header>
+<div class="how">
+  <b>Cách dùng (đọc 1 lần):</b>
+  <ol>
+    <li>Mỗi chương bắt đầu bằng ô vàng <b>"Nhớ trong 30 giây"</b>. Nếu chỉ có 15 phút trước giờ thi, hãy đọc các ô vàng và các ô đỏ <b>"Bẫy đề"</b>.</li>
+    <li>Bảng thuật ngữ có 3 cột: <b>Thuật ngữ EN</b> | <b>Hiểu nhanh (VI)</b> | <b>Đề hay tả bằng cụm từ…</b>. Khi đề mô tả đặc điểm, hãy dò cột thứ 3 để tìm thuật ngữ.</li>
+    <li>Bấm nút vàng <b>"Tự kiểm tra"</b> trên thanh menu: cột nghĩa sẽ bị che. Tự nói nghĩa, rồi bấm vào ô để xem đáp án. Nhớ lâu hơn nhiều so với đọc lại.</li>
+  </ol>
+</div>
+
+<!-- ============================ CHƯƠNG 1 ============================ -->
+<section class="ch" id="c1" style="--cc:var(--c1)">
+<h2>Chương 1 – Fundamentals of Testing <small>Nguyên lý kiểm thử</small></h2>
+
+<div class="key"><b class="t">Nhớ trong 30 giây</b>
+<ul>
+  <li><b>Error</b> (người làm sai) → tạo ra <b>Defect/Fault/Bug</b> (lỗi nằm trong code/tài liệu) → khi chạy gây ra <b>Failure</b> (hệ thống chạy sai).</li>
+  <li><b>7 nguyên lý</b>, câu thần chú: <span class="mn">Có – Hết – Sớm – Cụm – Sâu – Cảnh – Ảo</span></li>
+  <li><b>Quy trình kiểm thử cơ bản gồm 5 bước:</b> Planning &amp; Control → Analysis &amp; Design → Implementation &amp; Execution → Evaluating Exit Criteria &amp; Reporting → Test Closure. Câu thần chú: <span class="mn">Kế – Phân – Làm – Đánh – Đóng</span></li>
+  <li>Kiểm thử càng <b>độc lập</b> càng khách quan. Báo lỗi một cách khách quan, nhắm vào sản phẩm chứ không nhắm vào người viết.</li>
+  <li><b>Code of Ethics</b> có 8 mục: Public, Client &amp; Employer, Product, Judgment, Management, Profession, Colleagues, Self.</li>
+</ul></div>
+
+<h3>1.1 Thuật ngữ nền tảng</h3>
+<table class="t">
+<tr><th style="width:22%">Thuật ngữ EN</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Error <small>(= Mistake)</small></td><td>Hành động sai của <b>con người</b>: hiểu nhầm, gõ nhầm, tính sai.</td><td>"a human action that produces an incorrect result"</td></tr>
+<tr><td>Defect <small>(= Fault = Bug)</small></td><td>Khiếm khuyết <b>nằm trong</b> code hoặc tài liệu. Là một <b>trạng thái</b>, do error gây ra.</td><td>"flaw in a component", "manifestation of an error", "if executed, may cause a failure"</td></tr>
+<tr><td>Failure</td><td>Hệ thống <b>chạy lệch</b> so với kết quả mong đợi. Là một <b>sự kiện</b>, chỉ thấy khi chạy chương trình.</td><td>"deviation from expected delivery/service", "visible to end-users", "event"</td></tr>
+<tr><td>Root cause</td><td>Nguyên nhân gốc sinh ra lỗi: spec mơ hồ, bị cắt tiến độ, quản lý cấu hình kém, không theo coding standard…</td><td>"which can be root cause of a bug" (lưu ý: "tester chưa có chứng chỉ" <span class="no">không phải</span> root cause)</td></tr>
+<tr><td>Debugging</td><td><b>Developer</b> tìm, phân tích và sửa nguyên nhân lỗi. Đây <b>không phải</b> testing.</td><td>"locate, analyse and remove the cause of failure"</td></tr>
+<tr><td>Testing</td><td>Thực thi hoặc đánh giá phần mềm để tìm lỗi và kiểm tra xem nó có đáp ứng yêu cầu không.</td><td>"comparing what is with what ought to be"</td></tr>
+<tr><td>Reliability</td><td>Xác suất phần mềm <b>không</b> gây ra failure trong một khoảng thời gian và điều kiện xác định.</td><td>"probability", "specified time", "specified conditions", MTBF</td></tr>
+<tr><td>Quality</td><td>Mức độ sản phẩm đáp ứng yêu cầu và nhu cầu, kỳ vọng của người dùng.</td><td>"degree to which a system meets requirements / user needs"</td></tr>
+<tr><td>QA <small>Quality Assurance</small></td><td>Hướng <b>quy trình</b>, mục tiêu <b>phòng ngừa</b> lỗi.</td><td>"process-oriented", "prevent defects"</td></tr>
+<tr><td>QC <small>Quality Control</small></td><td>Hướng <b>sản phẩm</b>, mục tiêu <b>phát hiện</b> lỗi. Testing thuộc QC.</td><td>"product-oriented", "detect defects"</td></tr>
+<tr><td>Exhaustive testing</td><td>Test <b>mọi</b> tổ hợp input và precondition. Trên thực tế không làm được.</td><td>"all combinations of inputs and preconditions", "impractical amount of time"</td></tr>
+</table>
+
+<h4>Mục tiêu của kiểm thử (Testing objectives)</h4>
+<p>Có 4 mục tiêu: <b>Finding defects</b> (tìm lỗi) · <b>Gaining confidence</b> (tăng tự tin về chất lượng) · <b>Providing information for decision-making</b> (cung cấp thông tin để ra quyết định) · <b>Preventing defects</b> (ngăn ngừa lỗi).<br>
+<span class="no">SAI:</span> "to prove that the software has no faults" (chứng minh phần mềm không có lỗi).</p>
+
+<h3>1.2 Bảy nguyên lý kiểm thử (Seven Testing Principles)</h3>
+<table class="t">
+<tr><th style="width:24%">Nguyên lý</th><th style="width:38%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>1. Testing shows presence of defects <small>"Có"</small></td><td>Test chỉ chứng minh được là <b>có</b> lỗi, không chứng minh được là <b>không có</b> lỗi. Test giúp giảm xác suất còn lỗi chưa phát hiện.</td><td>"cannot prove that there are no defects", "reduces the probability of undiscovered defects"</td></tr>
+<tr><td>2. Exhaustive testing is impossible <small>"Hết"</small></td><td>Không thể test hết mọi tổ hợp, nên dùng <b>risk</b> và <b>priority</b> để chọn chỗ cần test.</td><td>"testing everything (all combinations) is not feasible", "use risk analysis and priorities to focus"</td></tr>
+<tr><td>3. Early testing <small>"Sớm"</small></td><td>Bắt đầu test càng <b>sớm</b> càng tốt trong vòng đời phát triển. Phát hiện lỗi sớm thì sửa rẻ hơn.</td><td>"start as early as possible in the SDLC", "cost of fixing rises later"</td></tr>
+<tr><td>4. Defect clustering <small>"Cụm"</small></td><td>Phần lớn lỗi <b>tập trung</b> ở một số ít module (nguyên lý Pareto 80/20).</td><td>"a small number of modules contain most of the defects", "80% defects in 20% modules"</td></tr>
+<tr><td>5. Pesticide paradox <small>"Sâu"</small></td><td>Chạy lặp lại <b>cùng một</b> bộ test sẽ không tìm được lỗi mới, giống như sâu "nhờn thuốc". Cần review và viết thêm test mới.</td><td>"same tests repeated over and over", "no longer find new defects", "regularly reviewed and revised"</td></tr>
+<tr><td>6. Testing is context dependent <small>"Cảnh"</small></td><td>Mỗi loại phần mềm cần cách test khác nhau, tùy <b>ngữ cảnh</b>.</td><td>"safety-critical software is tested differently from an e-commerce site"</td></tr>
+<tr><td>7. Absence-of-errors fallacy <small>"Ảo"</small></td><td>Phần mềm không còn lỗi nhưng không đáp ứng nhu cầu người dùng thì vẫn vô dụng. "Hết lỗi" chỉ là ảo tưởng.</td><td>"99% bug-free but unusable", "does not fulfil the users' needs and expectations"</td></tr>
+</table>
+
+<h3>1.3 Fundamental Test Process (quy trình kiểm thử cơ bản, 5 bước)</h3>
+<div class="flow"><span>1. Planning &amp; Control</span><i>→</i><span>2. Analysis &amp; Design</span><i>→</i><span>3. Implementation &amp; Execution</span><i>→</i><span>4. Evaluating Exit Criteria &amp; Reporting</span><i>→</i><span>5. Test Closure</span></div>
+<table class="t">
+<tr><th style="width:22%">Bước</th><th style="width:40%">Việc chính (VI)</th><th>Task trong đề, để biết thuộc bước nào</th></tr>
+<tr><td>1. Test Planning <small>&amp; Control</small></td><td><b>Planning:</b> xác định mục tiêu, cách tiếp cận (approach), lịch trình, <b>đặt ra exit criteria</b>, chọn metrics.<br><b>Control:</b> so sánh tiến độ thực tế với kế hoạch và đưa ra hành động điều chỉnh. Control diễn ra liên tục suốt dự án.</td><td>"identifying objectives", "scheduling test analysis and design", "selecting metrics for monitoring", "determine exit criteria", "monitoring progress"</td></tr>
+<tr><td>2. Test Analysis <small>&amp; Design</small></td><td>Review <b>test basis</b>, đánh giá <b>testability</b> của yêu cầu, xác định và ưu tiên <b>test conditions</b>, thiết kế test case ở mức cao, thiết kế môi trường, tạo <b>traceability</b>.</td><td>"reviewing the test basis", "evaluating testability of requirements", "identifying test conditions", "designing test environment"</td></tr>
+<tr><td>3. Test Implementation <small>&amp; Execution</small></td><td>Hoàn thiện test case, test data, test procedure/script và test suite. Kiểm tra môi trường đã sẵn sàng chưa. <b>Chạy test</b>, ghi log kèm version, so sánh actual với expected, báo <b>incident</b>, làm confirmation và regression test.</td><td>"creating test data", "writing test procedures", "verifying test environment", "logging the outcome", "reporting discrepancies as incidents"</td></tr>
+<tr><td>4. Evaluating Exit Criteria <small>&amp; Reporting</small></td><td>So <b>test log</b> với exit criteria, đánh giá xem có cần test thêm không, viết <b>test summary report</b> gửi stakeholders.</td><td>"checking test logs against exit criteria", "assessing if more tests are needed", "writing a test summary report"</td></tr>
+<tr><td>5. Test Closure</td><td>Kiểm tra các deliverable đã bàn giao đủ chưa, đóng các incident report, <b>lưu trữ testware</b>, bàn giao cho đội bảo trì, rút <b>lessons learned</b>.</td><td>"archiving testware", "handover to maintenance", "lessons learned", "checking which planned deliverables were delivered"</td></tr>
+</table>
+<p><b>Slide cũ (theo BS 7925-2)</b> dùng quy trình khác: Planning → Specification (identify → design → build) → Execution → Recording → Checking for completion.<br>
+<b>Một test case tốt theo slide, gọi là "4E":</b> Effective (tìm được lỗi) · Exemplary (đại diện cho nhiều case khác) · Economic (rẻ) · Evolvable (dễ bảo trì).</p>
+
+<h3>1.4 Tâm lý kiểm thử và tính độc lập (Psychology &amp; Independence)</h3>
+<table class="t">
+<tr><th style="width:22%">Mức độc lập</th><th style="width:40%">Ai thiết kế test</th><th>Ghi chú</th></tr>
+<tr><td>Thấp nhất</td><td>Chính <b>tác giả</b> tự test code của mình.</td><td>Chỉ tìm được khoảng <b>30–50%</b> lỗi của chính mình, vì cùng giả định và có cảm xúc gắn bó với code.</td></tr>
+<tr><td>↓</td><td>Một người <b>khác</b> trong cùng team (buddy).</td><td></td></tr>
+<tr><td>↓</td><td>Người thuộc <b>team/phòng ban khác</b>, ví dụ test team.</td><td></td></tr>
+<tr><td>Cao nhất</td><td>Người thuộc <b>tổ chức khác</b> (outsource, agency).</td><td>Slide còn liệt kê thêm mức "test do tool sinh ra".</td></tr>
+</table>
+<ul>
+  <li>Cách test tốt là cố chứng minh hệ thống <b>làm điều nó không nên làm</b>, tức là chọn test khó để tìm lỗi. "The best way to build confidence is to try to destroy it."</li>
+  <li>Khi báo lỗi: khách quan, đúng sự thật, <b>nhắm vào phần mềm chứ không nhắm vào lập trình viên</b>, hợp tác thay vì đối đầu.</li>
+</ul>
+
+<h3>1.5 ISTQB Code of Ethics (8 mục)</h3>
+<table class="t">
+<tr><th style="width:22%">Mục</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>PUBLIC</td><td>Hành động vì lợi ích cộng đồng.</td><td>"consistently with the public interest"</td></tr>
+<tr><td>CLIENT AND EMPLOYER</td><td>Hành động vì lợi ích khách hàng và công ty, miễn là không trái lợi ích cộng đồng.</td><td>"best interests of their client and employer"</td></tr>
+<tr><td>PRODUCT</td><td>Đảm bảo sản phẩm bàn giao đạt chuẩn chuyên môn cao nhất.</td><td>"deliverables meet the highest professional standards"</td></tr>
+<tr><td>JUDGMENT</td><td>Giữ sự chính trực và độc lập khi đưa ra đánh giá chuyên môn.</td><td>"integrity and independence in professional judgment"</td></tr>
+<tr><td>MANAGEMENT</td><td>Test manager/leader thúc đẩy cách quản lý có đạo đức.</td><td>"ethical approach to the management of testing"</td></tr>
+<tr><td>PROFESSION</td><td>Nâng cao uy tín của nghề.</td><td>"advance the integrity and reputation of the profession"</td></tr>
+<tr><td>COLLEAGUES</td><td>Công bằng, hỗ trợ đồng nghiệp, hợp tác với developer.</td><td>"fair to and supportive of colleagues", "cooperation with software developers"</td></tr>
+<tr><td>SELF</td><td>Học tập suốt đời.</td><td>"lifelong learning"</td></tr>
+</table>
+
+<div class="trap"><b class="t">Bẫy đề chương 1</b>
+<ul>
+  <li>"Tìm được ít bug nghĩa là test tốt": <span class="no">SAI</span>. "Tìm được nhiều bug thì <b>không nên</b> quá tự tin về chất lượng": <span class="ok">ĐÚNG</span>.</li>
+  <li>"Sau khi debug, hệ thống <b>chắc chắn</b> đáng tin cậy hơn": <span class="no">SAI</span>, vì bản sửa có thể sinh lỗi mới. "Một fault không nhất thiết ảnh hưởng đến reliability": <span class="ok">ĐÚNG</span>.</li>
+  <li>Thứ tự chạy test: chạy <b>test quan trọng nhất trước</b>, để dù dừng lúc nào thì cũng đã làm phần test tốt nhất có thể.</li>
+  <li>"How much testing is enough?" Câu trả lời là <b>tùy vào RISK</b>. Khi quyết định lúc nào dừng test, cân nhắc technical risk, business risk và project constraints. <b>Không</b> dựa vào product documentation.</li>
+  <li>Exit criteria được <b>đặt ra ở Planning</b> và được <b>kiểm tra ở bước Evaluating exit criteria</b>.</li>
+  <li>Đề hỏi thứ tự các task trong analysis/design: phân tích test basis → tạo traceability → xác định expected results → lập lịch thực thi (execution schedule).</li>
+</ul></div>
+</section>
+
+<!-- ============================ CHƯƠNG 2 ============================ -->
+<section class="ch" id="c2" style="--cc:var(--c2)">
+<h2>Chương 2 – Testing Throughout the Software Life Cycle <small>Kiểm thử trong vòng đời phần mềm</small></h2>
+
+<div class="key"><b class="t">Nhớ trong 30 giây</b>
+<ul>
+  <li><b>V-Model:</b> mỗi giai đoạn phát triển ở nhánh trái có một mức test tương ứng ở nhánh phải. Test được <b>thiết kế sớm</b>.</li>
+  <li><b>4 Test levels:</b> Component → Integration → System → Acceptance.</li>
+  <li><b>4 Test types:</b> Functional · Non-functional · Structural · Change-related (gồm Confirmation và Regression).</li>
+  <li><b>Maintenance testing</b> có 3 nguyên nhân kích hoạt: <b>M</b>odification, <b>M</b>igration, <b>R</b>etirement. Dùng <b>impact analysis</b> để quyết định cần regression bao nhiêu.</li>
+  <li><b>Verification</b> trả lời câu "làm <b>đúng cách</b> không?" (so với spec). <b>Validation</b> trả lời câu "làm <b>đúng thứ</b> người dùng cần không?".</li>
+</ul></div>
+
+<h3>2.1 Mô hình phát triển (Software Development Models)</h3>
+<table class="t">
+<tr><th style="width:22%">Mô hình</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Waterfall</td><td>Làm tuần tự từng pha, test chỉ diễn ra ở cuối nên lỗi bị phát hiện muộn.</td><td>"sequential", "testing at the end"</td></tr>
+<tr><td>V-Model</td><td>Tuần tự, nhưng mỗi pha phát triển có một mức test tương ứng. Có thể có <b>nhiều hoặc ít level hơn</b> tùy dự án, ví dụ thêm component integration sau component testing, hoặc system integration sau system testing.</td><td>"may have more, fewer or different levels", "each development activity has a corresponding test activity"</td></tr>
+<tr><td>Iterative-incremental</td><td>Chia hệ thống thành nhiều vòng lặp nhỏ. Mỗi vòng đều phát triển rồi test, nên <b>regression testing</b> ngày càng quan trọng. Các mô hình thuộc nhóm này: RAD, Agile, RUP, Spiral.</td><td>"series of shorter development cycles", "increment", "regression testing increasingly important"</td></tr>
+<tr><td>RAD</td><td>Rapid Application Development: làm prototype nhanh, phát triển song song các component, có time-box.</td><td>"rapid prototyping", "time-boxed", "components developed in parallel"</td></tr>
+<tr><td>Agile</td><td>Ví dụ XP, Scrum: vòng lặp ngắn, khách hàng tham gia liên tục, test-first/TDD.</td><td>"user stories", "short iterations", "test-driven"</td></tr>
+</table>
+<p><b>Good practices</b> áp dụng cho mọi mô hình: (1) mỗi hoạt động phát triển có một hoạt động test tương ứng; (2) mỗi test level có <b>mục tiêu riêng</b>; (3) bắt đầu phân tích và thiết kế test <b>ngay trong</b> pha phát triển tương ứng; (4) tester tham gia review bản nháp tài liệu từ sớm.<br>
+<span class="no">SAI:</span> "Testers start to get involved as soon as coding is done" (tester chỉ tham gia sau khi code xong).</p>
+
+<h4>V-Model: ghép pha phát triển với mức test tương ứng</h4>
+<table class="vm">
+<tr><th>Nhánh trái: phát triển</th><th></th><th>Nhánh phải: test level</th></tr>
+<tr><td>Business/User Requirements</td><td class="mid">↔</td><td><b>Acceptance testing</b></td></tr>
+<tr><td>System/Functional Specification</td><td class="mid">↔</td><td><b>System testing</b></td></tr>
+<tr><td>(Project spec, slide)</td><td class="mid">↔</td><td>Integration testing <i>in the large</i> (system integration)</td></tr>
+<tr><td>Architecture / Design Specification</td><td class="mid">↔</td><td><b>Integration testing</b> <i>in the small</i> (component integration)</td></tr>
+<tr><td>Detailed design / Code</td><td class="mid">↔</td><td><b>Component (unit) testing</b></td></tr>
+</table>
+
+<h4>Verification và Validation</h4>
+<table class="t">
+<tr><th style="width:22%">Thuật ngữ</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Verification</td><td>Kiểm tra sản phẩm của một pha có đúng <b>đặc tả/điều kiện</b> đặt ra từ đầu pha không. Thường làm bằng review, static testing.</td><td>"Are we building the product <b>right</b>?", "satisfy the conditions imposed at the start of that phase"</td></tr>
+<tr><td>Validation</td><td>Kiểm tra sản phẩm có đúng <b>nhu cầu người dùng</b> không. Thường bằng cách chạy thật (dynamic), acceptance testing. Functional testing phần lớn là validation.</td><td>"Are we building the <b>right</b> product?", "user needs and requirements"</td></tr>
+</table>
+
+<h3>2.2 Bốn mức kiểm thử (Test Levels)</h3>
+<table class="t">
+<tr><th style="width:18%">Level</th><th style="width:44%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Component testing <small>= unit / module / program testing</small></td><td>Test <b>từng thành phần riêng lẻ, tách biệt</b>. Thường do <b>developer</b> làm, dùng stub/driver, có thể dùng TDD (viết test trước). Lỗi thường được sửa ngay mà không ghi log. Có thể test cả non-functional (ví dụ memory leak) và structural (coverage).<br>Test basis: component spec, detailed design, code.</td><td>"tested in isolation", "lowest level", "done by programmer", "stubs and drivers", "test-first"</td></tr>
+<tr><td>Integration testing</td><td>Test <b>giao tiếp (interfaces)</b> giữa các thành phần. Có 2 loại:<br>• <b>Component integration</b> ("in the small"), làm <b>sau component testing</b>.<br>• <b>System integration</b> ("in the large"), làm <b>sau system testing</b>, test giao tiếp với hệ thống ngoài, Internet, EDI.<br>Test basis: design, architecture, workflows, use cases.</td><td>"interfaces between components", "interactions with other systems", "big-bang", "top-down", "bottom-up"</td></tr>
+<tr><td>System testing</td><td>Test <b>toàn bộ hệ thống</b> như một khối, trong môi trường <b>giống production nhất</b>. Gồm cả functional và non-functional, chủ yếu dùng kỹ thuật black-box, thường do <b>independent test team</b> làm.<br>Test basis: SRS, use cases, business processes, risk analysis.</td><td>"behaviour of the whole system", "environment as close as possible to production", "independent test team"</td></tr>
+<tr><td>Acceptance testing</td><td>Do <b>khách hàng/người dùng</b> thực hiện. Mục tiêu chính là <b>tạo sự tin tưởng (confidence)</b>, <span class="no">không</span> phải tìm lỗi. Có các dạng sau:<br>• <b>UAT</b> (User Acceptance Testing): người dùng kiểm tra xem có dùng được trong công việc thực tế không.<br>• <b>OAT</b> (Operational Acceptance Testing): admin hệ thống kiểm tra backup/restore, disaster recovery, quản lý user, bảo trì, lỗ hổng bảo mật.<br>• <b>Contract &amp; Regulation acceptance</b>: kiểm tra theo hợp đồng hoặc theo luật, tiêu chuẩn.<br>• <b>Alpha</b>: người dùng tiềm năng test <b>tại site của developer</b>.<br>• <b>Beta</b> (field testing): test <b>tại site khách hàng</b>, không có developer đi kèm.</td><td>"establish confidence", "fit for delivery", "final user sign-off", "at the developer's site" (Alpha), "at customer's own location" (Beta)</td></tr>
+</table>
+
+<h4>Stub, Driver và chiến lược tích hợp</h4>
+<table class="t">
+<tr><th style="width:22%">Thuật ngữ</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Stub</td><td>Code giả, thay cho component <b>được gọi</b> (nằm <b>bên dưới</b>) mà chưa có. Dùng trong top-down.</td><td>"replaces a called component", "simulate missing components"</td></tr>
+<tr><td>Driver</td><td>Code giả, <b>gọi vào</b> component đang test, tức là thay cho component <b>bên trên</b>. Dùng trong bottom-up. Còn gọi là test harness hoặc scaffolding.</td><td>"calls the component under test", "invoke baseline", "test harness"</td></tr>
+<tr><td>Big-bang</td><td>Ghép <b>tất cả</b> các component cùng một lúc. Khó xác định lỗi nằm ở đâu.</td><td>"combine all at once", "takes longer to locate faults"</td></tr>
+<tr><td>Top-down</td><td>Tích hợp từ trên xuống. Phần điều khiển chính được test trước nên demo được sớm, nhưng <b>cần stub</b>.</td><td>"critical control structure tested first", "needs stubs"</td></tr>
+<tr><td>Bottom-up</td><td>Tích hợp từ dưới lên. Tầng thấp được test kỹ, tốt cho giao tiếp với hardware/network, nhưng <b>cần driver</b> và phải đến cuối mới có hệ thống chạy được.</td><td>"lowest levels tested first", "needs drivers"</td></tr>
+<tr><td>Functional / Thread integration</td><td>Tích hợp theo chức năng hoặc theo luồng xử lý một sự kiện.</td><td>"minimum capability", "order of processing an event"</td></tr>
+</table>
+<p>Mẹo nhớ: <span class="mn">Stub ở DƯỚI, Driver ở TRÊN</span>. Top-down thì thiếu phần dưới nên cần Stub; Bottom-up thì thiếu phần trên nên cần Driver.</p>
+
+<h3>2.3 Các loại kiểm thử (Test Types)</h3>
+<table class="t">
+<tr><th style="width:22%">Test type</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Functional testing</td><td>Test hệ thống <b>làm gì</b> ("what"), dựa trên spec, dùng black-box, áp dụng được <b>ở mọi level</b>. Theo ISTQB, security testing và interoperability testing cũng được xếp vào functional.</td><td>"what the system does", "based on requirements/specification"</td></tr>
+<tr><td>Non-functional testing</td><td>Test hệ thống làm <b>tốt đến mức nào</b> ("how well"). Kết quả phải <b>đo được</b>. Áp dụng ở mọi level.<br>6 đặc tính chất lượng theo ISO 9126: Functionality, Reliability, Usability, Efficiency, Maintainability, Portability.</td><td>"how well", "performance, load, stress, usability, reliability, portability"</td></tr>
+<tr><td>Structural testing <small>(white-box)</small></td><td>Test dựa trên <b>cấu trúc</b> code hoặc kiến trúc, đo độ phủ bằng <b>coverage</b>. Dùng nhiều nhất ở component và integration.</td><td>"internal structure", "coverage", "glass box / clear box"</td></tr>
+<tr><td>Confirmation testing <small>(= re-testing)</small></td><td>Test lại <b>đúng chỗ vừa sửa</b> để xác nhận lỗi đã hết.</td><td>"verify the success of corrective actions", "defect has been fixed"</td></tr>
+<tr><td>Regression testing</td><td>Test lại các phần <b>đã từng test</b> để chắc rằng thay đổi không sinh lỗi mới. Áp dụng ở mọi level, cho cả functional, non-functional và structural. Rất nên tự động hóa.</td><td>"ensure defects have not been introduced by a modification", "unintended side-effects"</td></tr>
+<tr><td>Smoke testing <small>(= confidence testing)</small></td><td>Kiểm tra nhanh xem build có chạy được các chức năng cơ bản không, trước khi test sâu.</td><td>"confidence testing", "does the build start / basic functions work"</td></tr>
+<tr><td>Sanity testing</td><td>Kiểm tra nhanh sau khi sửa: chức năng vừa sửa còn hoạt động hợp lý không.</td><td>"quick check after a fix / minor change"</td></tr>
+</table>
+<h4>Một số loại non-functional hay gặp</h4>
+<table class="t">
+<tr><th style="width:22%">Loại</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Performance</td><td>Thời gian phản hồi, tốc độ xử lý.</td><td>"response time", "timing"</td></tr>
+<tr><td>Load</td><td>Hành vi của hệ thống dưới tải <b>thực tế</b>, nhiều người dùng cùng lúc.</td><td>"realistic multi-user load"</td></tr>
+<tr><td>Stress</td><td>Đẩy hệ thống <b>vượt quá giới hạn</b> để xem nó xử lý thế nào.</td><td>"beyond the limits", "graceful degradation"</td></tr>
+<tr><td>Volume</td><td>Xử lý lượng dữ liệu rất lớn.</td><td>"large amounts of data"</td></tr>
+<tr><td>Usability</td><td>Mức độ dễ hiểu, dễ học, dễ dùng.</td><td>"easy to use", "user-friendly", "7±2 choices"</td></tr>
+<tr><td>Reliability</td><td>Mức độ ổn định theo thời gian, đo bằng MTBF (thời gian trung bình giữa hai lần hỏng).</td><td>"MTBF", "failures per year"</td></tr>
+<tr><td>Portability / Configuration / Installation</td><td>Chạy được trên nhiều môi trường khác nhau, cài đặt và gỡ cài đặt được.</td><td>"different OS/hardware", "install/uninstall"</td></tr>
+<tr><td>Maintainability</td><td>Mức độ dễ sửa đổi, dễ phân tích.</td><td>"ease of modification"</td></tr>
+</table>
+<p>Cách ghép 3 khái niệm trong một câu: <i>Functional testing (một <b>type</b>) được làm trong System testing (một <b>level</b>) bằng Black-box (một <b>technique</b>).</i></p>
+
+<h3>2.4 Maintenance testing (kiểm thử bảo trì)</h3>
+<table class="t">
+<tr><th style="width:22%">Thuật ngữ</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Maintenance testing</td><td>Test một hệ thống <b>đang vận hành</b> khi nó bị thay đổi. Gồm confirmation test cộng với nhiều regression test.</td><td>"testing a released / operational system that has been changed"</td></tr>
+<tr><td>Trigger: Modification</td><td>Nâng cấp theo kế hoạch, sửa lỗi khẩn cấp, đổi môi trường, nâng cấp OS hoặc DB, cài patch.</td><td>"enhancement", "corrective/emergency change", "patch"</td></tr>
+<tr><td>Trigger: Migration</td><td>Chuyển sang nền tảng mới. Cần test môi trường mới và test chuyển đổi dữ liệu (data conversion).</td><td>"moved to another platform", "data conversion"</td></tr>
+<tr><td>Trigger: Retirement</td><td>Gỡ bỏ hệ thống. Cần test việc di chuyển và lưu trữ dữ liệu.</td><td>"system retired", "data archiving"</td></tr>
+<tr><td>Impact analysis</td><td>Phân tích xem thay đổi ảnh hưởng tới phần nào, từ đó quyết định cần regression bao nhiêu.</td><td>"what could this change have an impact on"</td></tr>
+</table>
+<p>Phạm vi (scope) của maintenance testing phụ thuộc vào <b>risk, độ lớn của thay đổi và độ lớn của hệ thống</b>. Theo slide: test khi phát triển thường đi bottom-up, còn maintenance test thường đi top-down. "Không có spec thì chỉ validate được, không verify được."</p>
+
+<div class="trap"><b class="t">Bẫy đề chương 2</b>
+<ul>
+  <li>Component integration testing làm <b>sau component testing</b>. System integration testing làm <b>sau system testing</b>.</li>
+  <li>Acceptance testing có thể diễn ra ở nhiều level: COTS được acceptance test khi cài đặt hoặc tích hợp; usability của một component có thể được test ngay trong component testing; tính năng mới có thể được acceptance test trước system testing. <span class="no">Ngoại lệ</span> (không đúng): "sau khi thay đổi đã release cho người dùng".</li>
+  <li>Sửa bug trong <b>một</b> module thì vẫn phải regression <b>các module khác</b>, vì thay đổi có thể ảnh hưởng chỗ khác.</li>
+  <li>Regression áp dụng được cho <b>cả</b> functional, non-functional và structural (đáp án "I, II và III").</li>
+  <li>Functional testing được làm ở <b>tất cả</b> các level, không chỉ ở system hay acceptance.</li>
+  <li>Debugging khác testing. Confirmation (test lại chỗ vừa sửa) khác regression (test lại chỗ khác xem có bị ảnh hưởng không).</li>
+  <li>Đề hỏi "Confidence testing" là gì: chọn <b>Smoke testing</b>.</li>
+</ul></div>
+</section>
+
+<!-- ============================ CHƯƠNG 3 ============================ -->
+<section class="ch" id="c3" style="--cc:var(--c3)">
+<h2>Chương 3 – Static Techniques <small>Kỹ thuật tĩnh</small></h2>
+
+<div class="key"><b class="t">Nhớ trong 30 giây</b>
+<ul>
+  <li><b>Static</b> nghĩa là <b>không chạy code</b> (gồm review và static analysis). <b>Dynamic</b> nghĩa là chạy code. Hai cách này <b>bổ trợ</b> nhau: cùng mục tiêu tìm lỗi nhưng tìm ra <b>loại lỗi khác nhau</b>.</li>
+  <li>Static tìm <b>defects</b> (nguyên nhân). Dynamic tìm <b>failures</b> (biểu hiện khi chạy).</li>
+  <li><b>6 bước của formal review:</b> Planning → Kick-off → Individual preparation → Review meeting → Rework → Follow-up.</li>
+  <li><b>5 vai trò:</b> Manager · Moderator · Author · Reviewer · Scribe.</li>
+  <li><b>4 loại review</b>, xếp từ ít đến nhiều formal: Informal → Walkthrough → Technical review → Inspection.</li>
+</ul></div>
+
+<h3>3.1 Static testing và lợi ích của review</h3>
+<ul>
+  <li><b>Review được gì?</b> Bất cứ thứ gì được viết ra: requirement, design, code, test plan, test case, user manual, hợp đồng…</li>
+  <li><b>Lợi ích:</b> phát hiện lỗi sớm nên sửa rẻ, tăng năng suất phát triển, rút ngắn thời gian, giảm chi phí và thời gian test, giảm số lỗi, cải thiện giao tiếp trong team.</li>
+  <li><b>Loại lỗi review tìm dễ hơn test động:</b> lệch so với standard, lỗi requirement, lỗi design, khó bảo trì (maintainability kém), interface spec sai.</li>
+</ul>
+
+<h3>3.2 Quy trình formal review (6 bước)</h3>
+<table class="t">
+<tr><th style="width:22%">Bước</th><th style="width:40%">Việc chính (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>1. Planning</td><td>Chọn người tham gia, phân vai, đặt entry/exit criteria, chọn phần tài liệu cần review.</td><td>"defining review criteria", "selecting personnel", "allocating roles"</td></tr>
+<tr><td>2. Kick-off</td><td>Phát tài liệu, giải thích mục tiêu, quy trình và tài liệu cho mọi người.</td><td>"distributing documents", "explaining objectives"</td></tr>
+<tr><td>3. Individual preparation</td><td>Mỗi người <b>tự đọc</b> tài liệu trước buổi họp và ghi chú lỗi, câu hỏi.</td><td>"each participant checks on their own", "noting potential defects"</td></tr>
+<tr><td>4. Review meeting</td><td>Họp để thảo luận và <b>ghi nhận</b> lỗi (do scribe ghi), rồi đưa ra quyết định.</td><td>"discussion or logging", "examination/evaluation/recording"</td></tr>
+<tr><td>5. Rework</td><td><b>Author</b> sửa các lỗi đã tìm ra.</td><td>"fixing defects found, typically done by the author"</td></tr>
+<tr><td>6. Follow-up</td><td><b>Moderator</b> kiểm tra lỗi đã được sửa chưa, thu thập metrics, kiểm tra exit criteria.</td><td>"checking that defects have been addressed", "gathering metrics"</td></tr>
+</table>
+
+<h3>3.3 Vai trò trong review (Roles)</h3>
+<table class="t">
+<tr><th style="width:22%">Vai trò</th><th style="width:40%">Làm gì (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Manager</td><td><b>Quyết định</b> có thực hiện review hay không, phân bổ thời gian trong lịch dự án, đánh giá review có đạt mục tiêu không.</td><td>"decides on the execution of reviews", "allocates time in project schedules"</td></tr>
+<tr><td>Moderator <small>(leader)</small></td><td><b>Dẫn dắt</b> buổi review, lên kế hoạch, điều phối cuộc họp, hòa giải các quan điểm khác nhau, làm follow-up.</td><td>"leads the review", "chairs the meeting", "mediates", "entry check / follow-up"</td></tr>
+<tr><td>Author</td><td>Người viết tài liệu được review, chịu trách nhiệm <b>sửa lỗi (rework)</b>.</td><td>"writer of the document", "rework"</td></tr>
+<tr><td>Reviewer <small>(checker / inspector)</small></td><td>Kiểm tra tài liệu để <b>tìm lỗi</b>.</td><td>"identify and describe findings"</td></tr>
+<tr><td>Scribe <small>(recorder)</small></td><td><b>Ghi lại</b> mọi lỗi và đề xuất trong buổi họp.</td><td>"documenting all issues, problems and open points"</td></tr>
+</table>
+
+<h3>3.4 Các loại review</h3>
+<table class="t">
+<tr><th style="width:18%">Loại</th><th style="width:44%">Đặc điểm (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Informal review</td><td>Không có quy trình, không có tài liệu ghi lại. Rẻ. Ví dụ: pair programming, nhờ đồng nghiệp đọc qua.</td><td>"no formal process", "undocumented", "cheap"</td></tr>
+<tr><td>Walkthrough</td><td>Do <b>author dẫn dắt</b>, trình bày tài liệu từng bước theo kịch bản (scenario, dry run). Mục tiêu: <b>học hỏi</b>, cùng hiểu tài liệu và đạt đồng thuận.</td><td>"led by the author", "learning / education", "gain understanding", "scenarios"</td></tr>
+<tr><td>Technical review <small>(peer review)</small></td><td>Có tài liệu ghi lại và quy trình được định nghĩa. Gồm đồng nghiệp và chuyên gia kỹ thuật, <b>không có manager</b>. Do moderator đã được đào tạo hoặc chuyên gia kỹ thuật dẫn dắt. Mục tiêu: thảo luận, đánh giá các phương án, giải quyết vấn đề kỹ thuật.</td><td>"peers and technical experts", "no management participation", "discuss, evaluate alternatives"</td></tr>
+<tr><td>Inspection</td><td><b>Formal nhất.</b> Do <b>moderator đã qua đào tạo</b> dẫn dắt (không phải author). Dùng checklist, rule, entry/exit criteria, thu thập metrics, hướng tới cải tiến quy trình. Mục tiêu chính: <b>tìm lỗi</b>.</td><td>"most formal", "trained moderator", "checklists", "entry and exit criteria", "metrics"</td></tr>
+<tr><td>Audit / Management review <small>(cheat sheet)</small></td><td><b>Audit:</b> đánh giá formal, do bên ngoài/độc lập thực hiện, xem có tuân thủ tiêu chuẩn không. <b>Management review:</b> ban quản lý review các tài liệu quản lý như project plan, test plan.</td><td>"compliance with standards", "external/independent" · "top management"</td></tr>
+</table>
+<p><b>Yếu tố giúp review thành công:</b> mục tiêu rõ ràng · đúng người tham gia · lỗi được đón nhận khách quan · dùng checklist · có đào tạo · manager ủng hộ · chú trọng học hỏi và cải tiến quy trình.</p>
+<p><b>Số liệu trong slide:</b> chi phí review khoảng 5–15% công sức phát triển · inspection nên đọc chậm, khoảng 1 trang (300 từ quan trọng) mỗi giờ · hiệu quả tìm lỗi: review thông thường 10–20%, inspection giai đoạn đầu 30–40%, inspection đã trưởng thành 80–95%.</p>
+
+<h3>3.5 Static analysis by tools (phân tích tĩnh bằng công cụ)</h3>
+<ul>
+  <li>Phân tích code mà <b>không chạy</b> code. Thường do <b>developer</b> làm, trước và trong component/integration testing. <b>Compiler</b> cũng là một dạng static analysis.</li>
+  <li><b>Tìm được:</b> biến dùng khi chưa có giá trị · biến khai báo mà không dùng · <b>dead/unreachable code</b> · interface không nhất quán · vòng lặp vô hạn · vi phạm coding standard · lỗ hổng bảo mật · lỗi cú pháp · code quá phức tạp.</li>
+  <li><b>Hạn chế:</b> có thể sinh ra rất nhiều cảnh báo giả, và không phản ánh được điều kiện khi chạy thật.</li>
+</ul>
+<table class="t">
+<tr><th style="width:22%">Thuật ngữ</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Data flow analysis</td><td>Theo dõi vòng đời của biến: được <b>define</b> (gán giá trị), <b>use</b> (đọc giá trị), hay undefined. Tìm ra bất thường (anomaly), ví dụ gán 2 lần liền mà không dùng, hoặc dùng trước khi gán.</td><td>"variable used before defined", "defined twice without use", "define-use"</td></tr>
+<tr><td>Control flow analysis</td><td>Phân tích các luồng điều khiển: code không thể tới được, vòng lặp vô hạn, nhảy tới label không tồn tại.</td><td>"unreachable nodes", "infinite loops", "jumps to undefined labels"</td></tr>
+<tr><td>Cyclomatic complexity</td><td>Độ phức tạp của đồ thị luồng điều khiển, bằng <b>số decision + 1</b>. Xem chi tiết ở chương 4.</td><td>"complexity of a flow graph", "number of decisions + 1"</td></tr>
+<tr><td>Other metrics</td><td>LOC (số dòng code), Halstead, fan-in/fan-out, độ lồng nhau (nesting level), độ sâu cây kế thừa, coupling/cohesion.</td><td>"lines of code", "nesting levels"</td></tr>
+</table>
+<p>Ví dụ data flow trong slide: <code>n := 0 … n := 1</code> là <b>anomaly</b>, vì n bị gán lại mà chưa dùng lần nào. Dùng <code>y</code> trước khi gán giá trị là <b>fault</b>.</p>
+
+<div class="trap"><b class="t">Bẫy đề chương 3</b>
+<ul>
+  <li><b>Rework</b> do <b>Author</b> làm. <b>Moderator</b> dẫn dắt review. <b>Manager</b> quyết định có thực hiện review không. <b>Scribe</b> ghi chép.</li>
+  <li><b>Inspection</b> do moderator dẫn dắt, còn <b>Walkthrough</b> do author dẫn dắt. Đây là điểm khác biệt hay hỏi nhất.</li>
+  <li>"Static analysis" trong đề Quizlet: vừa giống static testing, vừa do developer làm, nên chọn <b>"Both A and B"</b>.</li>
+  <li>Static và dynamic bổ trợ nhau vì <b>cùng mục tiêu tìm lỗi nhưng tìm loại lỗi khác nhau</b>.</li>
+  <li>Không liên quan tới static testing: <b>test data preparation tools</b>. Có liên quan: compiler, scribe, phát hiện lỗi sớm.</li>
+  <li>Mục tiêu chính của review: <b>tìm defects trong bất kỳ sản phẩm công việc nào</b> (không chỉ lỗi chính tả hay lỗi theo standard).</li>
+  <li>Lỗi "chia cho 0" trong code: cách phát hiện hiệu quả nhất là <b>source code inspection</b>.</li>
+</ul></div>
+</section>
+
+<!-- ============================ CHƯƠNG 4 ============================ -->
+<section class="ch" id="c4" style="--cc:var(--c4)">
+<h2>Chương 4 – Test Design Techniques <small>Kỹ thuật thiết kế test</small></h2>
+
+<div class="key"><b class="t">Nhớ trong 30 giây</b>
+<ul>
+  <li>Thứ tự tạo test: <b>Test condition</b> (test <i>cái gì</i>) → <b>Test case</b> (test <i>thế nào</i>) → <b>Test procedure/script</b> (các bước chạy theo thứ tự nào).</li>
+  <li><b>Black-box</b> gồm EP, BVA, Decision table, State transition, Use case.<br><b>White-box</b> gồm Statement, Decision/Branch, Condition, MC/DC, Path.<br><b>Experience-based</b> gồm Error guessing, Fault attack, Exploratory, Checklist.</li>
+  <li>Đạt 100% Decision coverage thì <b>chắc chắn</b> đạt 100% Statement coverage. Chiều ngược lại <span class="no">không đúng</span>.</li>
+  <li>Công thức: <b>V(G) = số decision + 1 = E − N + 2</b>.</li>
+  <li>Khi chọn kỹ thuật, tiêu chí quan trọng nhất là <b>test objective</b> (mục tiêu test).</li>
+</ul></div>
+
+<h3>4.1 Quy trình phát triển test (Test development process)</h3>
+<table class="t">
+<tr><th style="width:22%">Thuật ngữ</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Test basis</td><td>Mọi tài liệu làm căn cứ để test: requirement, spec, code, business process.</td><td>"all documents from which requirements can be inferred"</td></tr>
+<tr><td>Test condition</td><td>Một thứ có thể test được, ví dụ một chức năng hay một thuộc tính. Đây là câu hỏi "test cái gì?" và được xác định ở bước <b>Test analysis</b>.</td><td>"something that could be tested", "what to test", "test design specification"</td></tr>
+<tr><td>Test case</td><td>Gồm <b>precondition + input + expected result + postcondition</b>. Đây là câu hỏi "test thế nào?" và được tạo ở bước <b>Test design</b>.</td><td>"inputs, expected results", "test case specification"</td></tr>
+<tr><td>Test procedure <small>(= test script)</small></td><td>Chuỗi các bước để chạy một nhóm test case. Được tạo ở bước <b>Test implementation</b>. Nếu dùng tool tự động thì gọi là automated script.</td><td>"sequence of actions for execution", "test procedure specification", "manual test script"</td></tr>
+<tr><td>Test suite</td><td>Một tập các test case hoặc test procedure được gom lại để chạy cùng nhau.</td><td>"set of test cases"</td></tr>
+<tr><td>Test oracle</td><td>Nguồn để xác định kết quả mong đợi (expected result): spec, hệ thống cũ, chuyên gia…</td><td>"source to determine expected results"</td></tr>
+<tr><td>Traceability</td><td>Liên kết hai chiều giữa test và requirement, để biết requirement nào đã được test.</td><td>"linked back to the test basis", "traceability matrix"</td></tr>
+<tr><td>Test execution schedule</td><td>Thứ tự chạy các test procedure, sắp xếp theo <b>độ ưu tiên và phụ thuộc</b> giữa chúng.</td><td>"order considering priorities and dependencies"</td></tr>
+</table>
+
+<h3>4.2 Ba nhóm kỹ thuật</h3>
+<table class="t">
+<tr><th style="width:22%">Nhóm</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Specification-based <small>= Black-box = Behavioural</small></td><td>Thiết kế test dựa trên <b>spec</b>, <b>không cần</b> nhìn code. Dùng được ở mọi level, chiếm ưu thế ở các level cao.</td><td>"without reference to internal structure", "based on requirements"</td></tr>
+<tr><td>Structure-based <small>= White-box = Glass/Clear box</small></td><td>Thiết kế test dựa trên <b>cấu trúc code</b> hoặc luồng xử lý. Đo bằng coverage, dùng nhiều ở các level thấp.</td><td>"internal structure", "control flow", "coverage"</td></tr>
+<tr><td>Experience-based</td><td>Dựa trên <b>kinh nghiệm</b> và trực giác của tester.</td><td>"knowledge and experience of testers", "intuition"</td></tr>
+</table>
+
+<h3>4.3 Kỹ thuật Black-box</h3>
+<table class="t">
+<tr><th style="width:22%">Kỹ thuật</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Equivalence Partitioning <small>EP</small></td><td>Chia input/output thành các <b>lớp tương đương</b>, gồm lớp valid và lớp invalid. Mỗi lớp lấy <b>1 giá trị đại diện</b>. Giả định: một giá trị trong lớp chạy đúng thì cả lớp chạy đúng.</td><td>"partition", "one value from each class", "each input and output equivalence class at least once"</td></tr>
+<tr><td>Boundary Value Analysis <small>BVA</small></td><td>Test các giá trị ngay <b>tại biên</b> và <b>sát biên</b>, vì lỗi hay nằm ở biên. Biên là giá trị nhỏ nhất và lớn nhất của một phân vùng.</td><td>"edges", "minimum and maximum", "on and either side of boundaries"</td></tr>
+<tr><td>Decision Table</td><td>Lập bảng <b>tổ hợp điều kiện</b> (T/F) và hành động tương ứng. Mỗi cột (rule) cần ít nhất 1 test case. Dấu "–" nghĩa là don't care (giá trị nào cũng được).</td><td>"combinations of inputs / conditions", "business rules", "rules / don't care"</td></tr>
+<tr><td>State Transition</td><td>Hệ thống chuyển qua lại giữa các <b>trạng thái</b> theo sự kiện. Gồm 4 thành phần: states, transitions, events, actions. <b>0-switch coverage</b> nghĩa là mỗi transition hợp lệ được đi qua ít nhất 1 lần. Chỉ dùng state <b>diagram</b> thì chỉ thấy transition hợp lệ; muốn thấy transition <b>không hợp lệ</b> phải dùng state <b>table</b>.</td><td>"states, events, transitions", "ATM: nhập sai PIN 3 lần", "invalid transition", "N-switch"</td></tr>
+<tr><td>Use Case Testing</td><td>Test theo kịch bản sử dụng: actor, luồng chính (main scenario), luồng thay thế, pre/postcondition. Tốt cho việc tìm lỗi trong luồng nghiệp vụ và lỗi tích hợp. Hay dùng ở system và acceptance testing.</td><td>"actors", "mainstream / alternative scenarios", "business process flow"</td></tr>
+</table>
+<div class="f">
+<div><b>EP, ví dụ:</b> tuổi hợp lệ 18–60 thì có 3 phân vùng: &lt;18 (invalid) | 18–60 (valid) | &gt;60 (invalid). Chọn 3 giá trị, ví dụ 10, 30, 70.</div>
+<div><b>BVA 2 giá trị</b> cho khoảng [a, b]: <code>a−1, a, b, b+1</code>.  <b>BVA 3 giá trị:</b> <code>a−1, a, a+1, b−1, b, b+1</code>.</div>
+<div>Đề Quizlet: "&lt;10 bị từ chối, 10–21 được chấp nhận, ≥22 bị từ chối". Biên là <b>9, 10, 21, 22</b>.</div>
+<div>Đề Quizlet: "đặt tối thiểu 5 hộp, từ 100 hộp trở lên được giảm 20%". Các biên là 4 | 5 và 99 | 100, nên chọn đáp án có <b>4, 5, 99</b>.</div>
+<div><b>Decision table:</b> có n điều kiện đúng/sai thì có tối đa <b>2<sup>n</sup></b> rule (cột).</div>
+<div><b>Cách đọc decision table:</b> lấy từng test case, so lần lượt với từng điều kiện để tìm cột khớp (cột có "–" thì bỏ qua điều kiện đó), rồi đọc phần Actions của cột đó.</div>
+</div>
+
+<h3>4.4 Kỹ thuật White-box và coverage</h3>
+<div class="f">
+<div><b>Statement coverage</b> = số statement được chạy ÷ tổng số statement × 100%</div>
+<div><b>Decision (Branch) coverage</b> = số kết quả decision (True/False) được chạy ÷ tổng số kết quả decision × 100%</div>
+<div><b>Cyclomatic complexity V(G)</b> = số decision + 1 = <b>E − N + 2</b> (E là số cạnh, N là số nút) = số vùng kín + 1</div>
+<div>Độ mạnh tăng dần: Statement &lt; Decision &lt; MC/DC &lt; Multiple condition. Path coverage là mạnh nhất.</div>
+<div>Theo slide, test ad-hoc thường chỉ đạt khoảng 60–75% statement và 40–60% decision. <b>100% coverage không có nghĩa là đã test đầy đủ 100%.</b></div>
+</div>
+
+<h4>Bảng tra nhanh số test tối thiểu</h4>
+<table>
+<tr><th>Dạng code</th><th>Statement</th><th>Decision</th><th>V(G)</th><th>Số path</th></tr>
+<tr><td>1 IF không có ELSE</td><td>1</td><td>2</td><td>2</td><td>2</td></tr>
+<tr><td>1 IF…ELSE</td><td>2</td><td>2</td><td>2</td><td>2</td></tr>
+<tr><td>2 IF <b>nối tiếp</b>, không có ELSE</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+<tr><td>2 IF…ELSE <b>nối tiếp</b></td><td>2</td><td>2</td><td>3</td><td>4</td></tr>
+<tr><td>n IF nối tiếp, không có ELSE</td><td>1</td><td>2</td><td>n+1</td><td>2<sup>n</sup></td></tr>
+<tr><td>IF <b>lồng</b> IF, không có ELSE</td><td>1</td><td>3</td><td>3</td><td>3</td></tr>
+<tr><td>IF…ELSE có IF…ELSE lồng bên trong nhánh THEN</td><td>3</td><td>3</td><td>3</td><td>3</td></tr>
+</table>
+<p><b>Mẹo đếm:</b></p>
+<ul>
+  <li><b>Statement:</b> đếm số khối lệnh "loại trừ nhau", tức là các khối không thể cùng chạy trong một lần. Mỗi khối như vậy cần 1 test riêng.</li>
+  <li><b>Decision:</b> mỗi IF cần chạy cả True lẫn False. Các IF <b>nối tiếp</b> có thể gộp chung vào 2 test (một test tất cả True, một test tất cả False). Với IF <b>lồng</b>, mỗi lần IF ngoài cho False là phải tốn thêm 1 test riêng.</li>
+  <li>Vòng lặp <code>WHILE</code> tính là 1 decision. Một test vừa đi vào vòng lặp rồi thoát ra là đã phủ được cả True và False.</li>
+  <li>Kiểm tra lại đáp án bằng bất đẳng thức: <b>Statement ≤ Decision ≤ V(G)</b>.</li>
+</ul>
+<div class="grid2">
+<div><b>Ví dụ 1</b> (Quizlet, đáp án <b>3, 3</b>)
+<pre>IF C>A THEN
+   IF C>B THEN print1
+   ELSE        print2
+   ENDIF
+ELSE print3
+ENDIF</pre>
+Có 3 khối print loại trừ nhau nên Statement = 3. Decision cũng = 3: (C>A, C>B) · (C>A, C≤B) · (C≤A).</div>
+<div><b>Ví dụ 2</b> (Quizlet, đáp án <b>1, 2</b>)
+<pre>IF (senior AND January)
+   Bonus = Bonus + 100
+IF class = "first"
+   discount = .5
+Fare = Fare * discount</pre>
+2 IF nối tiếp, không có ELSE. Chỉ cần 1 test cho cả hai IF đều True là chạy hết mọi statement, nên Statement = 1. Decision = 2 (thêm 1 test cho cả hai đều False).</div>
+</div>
+<table class="t">
+<tr><th style="width:22%">Coverage khác</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Condition coverage</td><td>Mỗi điều kiện con (ví dụ A và B trong "A AND B") đều nhận được cả T lẫn F.</td><td>"each condition takes all possible outcomes"</td></tr>
+<tr><td>MC/DC <small>Modified Condition / Decision</small></td><td>Mỗi điều kiện con phải chứng minh được rằng nó <b>tự mình làm đổi</b> kết quả của cả decision.</td><td>"each condition independently affects the outcome"</td></tr>
+<tr><td>Multiple condition coverage</td><td><b>Mọi tổ hợp</b> T/F của các điều kiện con, tức là 2<sup>n</sup> tổ hợp.</td><td>"all combinations of conditions"</td></tr>
+<tr><td>Path coverage</td><td>Đi qua mọi đường đi có thể có trong code.</td><td>"all paths through the module"</td></tr>
+<tr><td>LCSAJ / Data flow</td><td>LCSAJ: Linear Code Sequence And Jump. Data flow testing: test các cặp define-use của biến. Hai kỹ thuật này chỉ có trong danh sách của slide.</td><td></td></tr>
+</table>
+
+<h3>4.5 Kỹ thuật dựa trên kinh nghiệm (Experience-based)</h3>
+<table class="t">
+<tr><th style="width:22%">Kỹ thuật</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Error guessing</td><td>Đoán chỗ dễ có lỗi dựa trên kinh nghiệm. Nên dùng <b>sau</b> các kỹ thuật formal, để <b>bổ sung</b>.</td><td>"best used after more formal techniques", "complement"</td></tr>
+<tr><td>Fault attack</td><td>Error guessing làm <b>có hệ thống</b>: liệt kê các lỗi có thể xảy ra, rồi thiết kế test để "tấn công" vào đó, cố ép lỗi xảy ra. Dựa trên kinh nghiệm và dữ liệu về defect/failure trong quá khứ.</td><td>"list of possible defects", "attack", "force specific failures", "defect and failure data"</td></tr>
+<tr><td>Exploratory testing</td><td>Vừa học hệ thống, vừa thiết kế test, vừa chạy và ghi log <b>cùng lúc</b>. Làm theo <b>test charter</b> và giới hạn thời gian (time-box). Hợp khi <b>spec kém</b> và <b>gấp thời gian</b>.</td><td>"minimum planning, maximum execution", "inadequate specification", "severe time pressure", "test charter"</td></tr>
+<tr><td>Checklist-based</td><td>Test theo một danh sách kiểm tra được đúc kết từ kinh nghiệm.</td><td>"checklist"</td></tr>
+</table>
+
+<h3>4.6 Chọn kỹ thuật test</h3>
+<p><b>Yếu tố bên trong (internal):</b> các model sẵn có, kiến thức và kinh nghiệm của tester, loại lỗi dễ gặp, <b>test objective</b>, tài liệu sẵn có, mô hình vòng đời phát triển.<br>
+<b>Yếu tố bên ngoài (external):</b> risk, yêu cầu của khách hàng hoặc hợp đồng, loại hệ thống, quy định pháp lý (regulatory), thời gian và ngân sách.</p>
+
+<div class="trap"><b class="t">Bẫy đề chương 4</b>
+<ul>
+  <li>Hỏi "kỹ thuật nào là <b>structure-based</b>": chọn Decision testing hoặc Statement testing. EP, BVA, State transition và Decision table đều là black-box. (Lưu ý: <i>decision <b>table</b></i> là black-box, còn <i>decision <b>testing</b></i> là white-box.)</li>
+  <li>White-box còn có thể áp dụng cho cấu trúc ở mức hệ thống, như <b>business process flow</b> hay menu, chứ không chỉ cho code.</li>
+  <li>Black-box tester <b>không cần</b> hiểu source code.</li>
+  <li>Spec kém cộng với gấp thời gian: chọn <b>Exploratory testing</b>.</li>
+  <li>Một test case đúng chuẩn phải có <b>expected result</b>. Đáp án nào thiếu expected result (ví dụ thiếu "postage £0.25") là sai.</li>
+  <li>Đề cho test case gồm INT_MAX, INT_MAX+1, 0, 1: kỹ thuật được dùng là <b>BVA</b>.</li>
+  <li>Thiết kế test bằng state <b>diagram</b> thì chỉ ra được các <b>transition hợp lệ</b>.</li>
+</ul></div>
+</section>
+
+<!-- ============================ CHƯƠNG 5 ============================ -->
+<section class="ch" id="c5" style="--cc:var(--c5)">
+<h2>Chương 5 – Test Management <small>Quản lý kiểm thử</small></h2>
+
+<div class="key"><b class="t">Nhớ trong 30 giây</b>
+<ul>
+  <li><b>Test leader/manager</b> lập kế hoạch, tổ chức, giám sát và kiểm soát. <b>Tester</b> phân tích, thiết kế, tự động hóa và chạy test.</li>
+  <li><b>Risk = Likelihood × Impact</b> (khả năng xảy ra × mức độ thiệt hại). <b>Product risk</b> là rủi ro về chất lượng sản phẩm. <b>Project risk</b> là rủi ro về quản lý dự án.</li>
+  <li><b>Configuration Management (CM)</b> gồm 4 phần: Identification · Control · Status accounting · Audit.</li>
+  <li><b>Severity</b> là mức độ nghiêm trọng của lỗi. <b>Priority</b> là mức độ cần sửa gấp. Hai khái niệm này độc lập với nhau.</li>
+  <li><b>Estimation</b> có 2 cách: metrics-based (dựa trên dữ liệu lịch sử) và expert-based (dựa trên ý kiến chuyên gia).</li>
+</ul></div>
+
+<h3>5.1 Tổ chức test và tính độc lập</h3>
+<table class="t">
+<tr><th style="width:24%">Cấu trúc (từ ít → nhiều độc lập)</th><th style="width:40%">Ưu / nhược (VI)</th><th>Ghi chú</th></tr>
+<tr><td>1. Developer tự test</td><td>Ưu: hiểu code nhất, sửa lỗi rẻ. Nhược: khó tự phá sản phẩm của mình, chỉ thấy điều mình mong thấy.</td><td>Thường dùng cho component testing</td></tr>
+<tr><td>2. Buddy trong team dev</td><td>Ưu: có chút độc lập, quan hệ thân thiện. Nhược: bận việc dev của mình, nhìn theo góc kỹ thuật chứ không theo nghiệp vụ.</td><td></td></tr>
+<tr><td>3. Tester nằm trong team dev</td><td>Ưu: có góc nhìn độc lập, chuyên test. Nhược: dễ bị áp lực từ đồng nghiệp, chỉ có một góc nhìn.</td><td></td></tr>
+<tr><td>4. Đội test độc lập</td><td>Ưu: khách quan, nhất quán, có chuyên môn test. Nhược: hội chứng "ném qua tường", dễ đối đầu với dev, dev ỷ lại vào tester.</td><td>Thường dùng cho system testing</td></tr>
+<tr><td>5. Tư vấn test nội bộ</td><td>Chỉ tư vấn, review và hỗ trợ, <b>không</b> trực tiếp test.</td><td>Ảnh hưởng bằng sự thuyết phục, không có quyền ra lệnh</td></tr>
+<tr><td>6. Tổ chức bên ngoài (3rd party)</td><td>Ưu: chuyên môn cao, không dính chính trị nội bộ. Nhược: thiếu hiểu biết về sản phẩm, đắt, kiến thức tích lũy bị mang ra ngoài.</td><td></td></tr>
+</table>
+<p><b>Lợi ích của độc lập:</b> không thiên vị, tìm được loại lỗi khác với dev, kiểm chứng lại các giả định. <b>Bất lợi:</b> tách biệt với team dev, dễ thành nút thắt cổ chai, dev giảm tinh thần trách nhiệm về chất lượng.</p>
+
+<h3>5.2 Test leader và Tester</h3>
+<table class="t">
+<tr><th style="width:22%">Vai trò</th><th style="width:40%">Công việc (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Test leader <small>(test manager)</small></td><td>Viết test policy, strategy và plan. Lập lịch, ước lượng, giám sát và kiểm soát. Chọn metrics và tool, quyết định cái gì nên tự động hóa. Quản lý cấu hình testware. Viết test summary report.</td><td>"plans, organizes, monitors and controls"</td></tr>
+<tr><td>Tester</td><td>Review và góp ý test plan, phân tích spec xem có test được không (testability), thiết kế test, chuẩn bị test data và môi trường, chạy test và ghi log, tự động hóa test.</td><td>"specifies, automates and executes tests"</td></tr>
+</table>
+
+<h3>5.3 Lập kế hoạch test (Test planning)</h3>
+<p><b>Các tầng tài liệu từ trên xuống:</b> Test Policy (cấp công ty) → Test Strategy (cấp công ty) → (Master) Test Plan (cấp dự án) → Level Test Plan (cho từng level).</p>
+<h4>Test Plan theo IEEE 829, gồm 16 mục</h4>
+<p style="font-size:13px">1 Identifier · 2 Introduction · 3 Test items · 4 Features to be tested · 5 Features <b>not</b> to be tested · 6 Approach · 7 Item pass/fail criteria · 8 Suspension &amp; resumption criteria · 9 Test deliverables · 10 Testing tasks · 11 Environmental needs · 12 Responsibilities · 13 Staffing &amp; training needs · 14 Schedule · 15 Risks &amp; contingencies · 16 Approvals</p>
+<p><b>Các tài liệu theo IEEE 829:</b> Test plan · Test design spec · Test case spec · Test procedure spec · Test item transmittal report · Test log · Test incident report · Test summary report.</p>
+<table class="t">
+<tr><th style="width:22%">Thuật ngữ</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Entry criteria</td><td>Điều kiện để <b>được bắt đầu</b> test: tài liệu đã có, môi trường đã sẵn sàng, tool và tiện ích hỗ trợ đã có, code test được.</td><td>"documentation available?", "test environment ready?", "supporting utilities available?"</td></tr>
+<tr><td>Exit criteria <small>(completion criteria)</small></td><td>Điều kiện để <b>được dừng</b> test: độ phủ (thoroughness/coverage), reliability, chi phí, lịch trình, tình trạng sửa lỗi, rủi ro còn lại (residual risk).</td><td>"determine when to stop testing", "thoroughness measures, reliability measures, cost, schedule, residual risks"</td></tr>
+<tr><td>Suspension / resumption criteria</td><td>Khi nào <b>tạm dừng</b> và khi nào <b>tiếp tục</b> test. Ví dụ theo slide: tạm dừng khi tester tốn hơn 25% thời gian vào xử lý lỗi.</td><td>"conditions that must prevail to allow testing to continue"</td></tr>
+</table>
+
+<h4>Test approaches (chiến lược tiếp cận)</h4>
+<table class="t">
+<tr><th style="width:22%">Approach</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Analytical</td><td>Dựa trên phân tích, ví dụ <b>risk-based testing</b>.</td><td>"risk-based", "requirements-based"</td></tr>
+<tr><td>Model-based</td><td>Dựa trên một mô hình, ví dụ mô hình thống kê về cách người dùng sử dụng hệ thống.</td><td>"statistical usage profiles", "model"</td></tr>
+<tr><td>Methodical</td><td>Theo một phương pháp có sẵn: failure-based, checklist, các đặc tính chất lượng.</td><td>"checklist", "quality characteristics"</td></tr>
+<tr><td>Process / Standard-compliant</td><td>Tuân theo quy trình hoặc tiêu chuẩn ngành.</td><td>"industry standard", "IEEE"</td></tr>
+<tr><td>Dynamic / Heuristic</td><td>Phản ứng theo tình hình thực tế, ví dụ exploratory testing.</td><td>"reactive", "exploratory"</td></tr>
+<tr><td>Consultative</td><td>Dựa vào ý kiến tư vấn của user hoặc chuyên gia.</td><td>"directed by advice of experts / users"</td></tr>
+<tr><td>Regression-averse</td><td>Tái sử dụng test cũ và tự động hóa tối đa để tránh lỗi hồi quy.</td><td>"reuse of existing test material", "extensive automation"</td></tr>
+</table>
+
+<h3>5.4 Ước lượng, giám sát, kiểm soát</h3>
+<table class="t">
+<tr><th style="width:22%">Thuật ngữ</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Metrics-based estimation</td><td>Ước lượng dựa trên <b>dữ liệu lịch sử</b> của các dự án tương tự.</td><td>"historical data", "previous similar projects"</td></tr>
+<tr><td>Expert-based estimation</td><td>Ước lượng dựa trên ý kiến của <b>người làm việc đó hoặc chuyên gia</b>.</td><td>"team wisdom", "owner of the tasks", "experts"</td></tr>
+<tr><td>Test monitoring</td><td>Theo dõi tiến độ bằng metrics: số test case đã chạy/chưa chạy, pass/fail, số lỗi, coverage, % môi trường đã chuẩn bị, chi phí.</td><td>"number of test cases run/not run, passed/failed"</td></tr>
+<tr><td>Test control</td><td>Hành động điều chỉnh khi bị lệch kế hoạch: đổi độ ưu tiên, đổi lịch, siết entry/exit criteria, phân bổ lại nguồn lực.</td><td>"re-prioritize", "corrective actions", "tighten entry criteria"</td></tr>
+<tr><td>Test summary report</td><td>Báo cáo tổng kết: tóm tắt các hoạt động test, sai lệch so với kế hoạch, đánh giá tổng thể, kết quả, các sự kiện chính, trạng thái so với mục tiêu.</td><td>"summary of major testing activities, events and status vs goals"</td></tr>
+</table>
+<p><b>Yếu tố ảnh hưởng tới ước lượng:</b> đặc điểm sản phẩm (chất lượng spec, kích thước, độ phức tạp), quy trình phát triển (độ ổn định, tool, kỹ năng của người làm, áp lực thời gian), và kết quả test (số lỗi tìm được, khối lượng rework).</p>
+
+<h3>5.5 Configuration Management (CM, quản lý cấu hình)</h3>
+<table class="t">
+<tr><th style="width:22%">Thành phần</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Configuration identification</td><td>Xác định và đặt tên, đánh version cho các <b>configuration item</b> (CI).</td><td>"naming conventions", "version numbering", "baseline"</td></tr>
+<tr><td>Configuration control</td><td>Kiểm soát thay đổi: đi qua change control board, phân tích tác động, quản lý thư viện có kiểm soát.</td><td>"change control", "controlled library", "restricted access"</td></tr>
+<tr><td>Status accounting</td><td>Ghi nhận và báo cáo trạng thái của từng CI và từng change request.</td><td>"recording and reporting status", "traceability"</td></tr>
+<tr><td>Configuration audit</td><td>Kiểm tra xem các CI có đầy đủ và đúng không.</td><td>"verifying completeness and correctness"</td></tr>
+</table>
+<p>Tester cần CM vì CM đảm bảo biết <b>chính xác version</b> của testware và của test object. Thiếu CM sẽ dẫn đến: không tái hiện được lỗi khách hàng báo, lỗi đã sửa lại xuất hiện, test đúng nhưng trên version cũ. Thứ <b>không</b> đặt dưới CM: dữ liệu thật đang chạy (live data).</p>
+
+<h3>5.6 Risk và kiểm thử</h3>
+<table class="t">
+<tr><th style="width:22%">Thuật ngữ</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Risk</td><td>Khả năng xảy ra một kết quả xấu. <b>Mức rủi ro = Likelihood × Impact.</b></td><td>"possibility of a negative or undesirable outcome"</td></tr>
+<tr><td>Product risk <small>(quality risk)</small></td><td>Rủi ro <b>về chất lượng sản phẩm</b>: phần mềm dễ hỏng, gây hại cho người dùng, đặc tính chất lượng kém, dữ liệu sai, không làm đúng chức năng.</td><td>"error-prone areas", "potential harm to user / threat to patient's life", "poor software characteristics"</td></tr>
+<tr><td>Project risk</td><td>Rủi ro <b>về quản lý dự án</b>: thiếu người hoặc thiếu kỹ năng, giao hàng trễ, nhà cung cấp thất hứa, vấn đề chính trị, môi trường test chưa sẵn sàng, requirement kém.</td><td>"skill and staff shortages", "delivery behind schedule", "3rd party supplier fails"</td></tr>
+<tr><td>Risk-based testing</td><td>Dùng risk để quyết định test cái gì <b>trước</b>, test cái gì <b>nhiều nhất</b>, và test <b>kỹ đến đâu</b>, nhằm giảm rủi ro còn lại (residual risk).</td><td>"prioritise", "reduce residual risk"</td></tr>
+<tr><td>Cách xử lý risk</td><td>4 cách: <b>Mitigate</b> (giảm) · <b>Contingency</b> (chuẩn bị phương án dự phòng) · <b>Transfer</b> (chuyển cho bên khác) · <b>Ignore/Accept</b> (chấp nhận).</td><td></td></tr>
+</table>
+
+<h3>5.7 Incident management (quản lý sự cố)</h3>
+<table class="t">
+<tr><th style="width:22%">Thuật ngữ</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Incident</td><td>Bất kỳ sự kiện nào trong lúc test <b>cần điều tra thêm</b>, ví dụ actual khác expected. Nguyên nhân có thể là lỗi phần mềm, test sai, expected result sai, hoặc lỗi môi trường. Incident có thể được báo cho cả code lẫn tài liệu.</td><td>"any event occurring that requires investigation"</td></tr>
+<tr><td>Incident report <small>(IEEE 829)</small></td><td>Gồm: ID · tóm tắt · mô tả (input, expected, actual, ngày giờ, bước thực hiện, môi trường, số lần thử tái hiện, tên tester) · <b>impact</b> · severity/priority · <b>định danh và version</b> của phần mềm/phần cứng đang test.</td><td>"impact, incident description, date and time, your name"</td></tr>
+<tr><td>Severity</td><td>Mức độ <b>nghiêm trọng</b> của tác động lỗi gây ra.</td><td>"impact of the failure"</td></tr>
+<tr><td>Priority</td><td>Mức độ <b>cần sửa gấp</b>.</td><td>"urgency to fix"</td></tr>
+</table>
+<p><b>Ví dụ Severity và Priority:</b> sai chính tả tên công ty ở trang chủ thì <b>priority cao, severity thấp</b>. Chức năng thử nghiệm chưa dùng tới bị crash thì <b>severity cao, priority thấp</b>.<br>
+<b>Vòng đời incident:</b> recorded → analysed → assigned → fixed → retested → closed.<br>
+<b>Mục đích của incident report:</b> cung cấp thông tin cho dev để sửa, giúp test leader theo dõi chất lượng và tiến độ, gợi ý cải tiến quy trình.</p>
+
+<div class="trap"><b class="t">Bẫy đề chương 5</b>
+<ul>
+  <li>Metrics để giám sát <b>test execution</b>: số test case đã chạy/chưa chạy, pass/fail. Không phải chi phí, cũng không phải "số lỗi còn lại".</li>
+  <li>CM <b>không</b> làm việc so sánh actual với expected (đó là việc của comparator tool), và cũng không audit theo ISO 9001.</li>
+  <li>Incident report thiếu thông tin quan trọng nhất là gì? Thường là <b>định danh/version của phần mềm và phần cứng</b> đang test.</li>
+  <li>Câu về entry criteria, ví dụ "I, II, IV": mục "điều kiện để testing được <i>tiếp tục</i>" thuộc suspension/resumption criteria, không phải entry criteria.</li>
+  <li>Exit criteria điển hình: thoroughness, reliability, cost, schedule, tình trạng sửa lỗi, residual risk. <b>Không</b> gồm "mức độ độc lập của tester" hay "trình độ của tester".</li>
+  <li>Lợi ích của test độc lập: tester <b>không thiên vị</b> và <b>tìm được loại lỗi khác</b> với dev.</li>
+  <li>Lý do cần test strategy: lỗi phần mềm có thể gây mất tiền, mất uy tín, thậm chí gây chết người (đáp án "D" trong Quizlet).</li>
+</ul></div>
+</section>
+
+<!-- ============================ CHƯƠNG 6 ============================ -->
+<section class="ch" id="c6" style="--cc:var(--c6)">
+<h2>Chương 6 – Tool Support for Testing <small>Công cụ hỗ trợ kiểm thử</small></h2>
+
+<div class="key"><b class="t">Nhớ trong 30 giây</b>
+<ul>
+  <li>Tool được phân loại theo <b>hoạt động</b> mà nó hỗ trợ. Ký hiệu (D) nghĩa là tool thường do <b>developer</b> dùng.</li>
+  <li><b>Probe effect</b>: tool "xâm nhập" (intrusive) vào hệ thống có thể làm thay đổi chính kết quả đang đo.</li>
+  <li><b>Lợi ích</b> của tool: giảm việc lặp lại, kết quả nhất quán và lặp lại được, đánh giá khách quan, dễ truy cập thông tin về test.</li>
+  <li><b>Rủi ro</b>: kỳ vọng phi thực tế, đánh giá thấp chi phí và công sức, quá phụ thuộc vào tool, vendor phá sản hoặc hỗ trợ kém.</li>
+  <li>Cách đưa tool vào tổ chức: proof-of-concept → <b>pilot project</b> → triển khai dần (incremental roll-out).</li>
+</ul></div>
+
+<h3>6.1 Phân loại tool và cách nhận diện</h3>
+<table class="t">
+<tr><th style="width:22%">Tool</th><th style="width:40%">Làm gì (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Test management tool</td><td>Quản lý testware, lập lịch, ghi log kết quả, <b>traceability</b> giữa test và requirement, có giao tiếp với các tool khác.</td><td>"traceability between requirements, tests and bugs", "interface to test execution tools"</td></tr>
+<tr><td>Requirements management tool</td><td>Lưu trữ requirement, kiểm tra tính nhất quán, liên kết requirement với test.</td><td>"consistency of requirements"</td></tr>
+<tr><td>Incident management tool</td><td>Ghi nhận và theo dõi vòng đời của lỗi.</td><td>"defect tracking", "workflow"</td></tr>
+<tr><td>Configuration management tool</td><td>Quản lý version và build của phần mềm và testware.</td><td>"version control", "builds"</td></tr>
+<tr><td>Review tool</td><td>Hỗ trợ quy trình review: lưu bình luận, checklist.</td><td>"support review process"</td></tr>
+<tr><td>Static analysis tool (D)</td><td>Phân tích code mà không chạy: coding standard, complexity, dead code.</td><td>"enforce coding standards", "cyclomatic complexity", "code not executed"</td></tr>
+<tr><td>Modeling tool (D)</td><td>Kiểm tra tính nhất quán của các model, ví dụ UML.</td><td>"validate models"</td></tr>
+<tr><td>Test design tool</td><td>Sinh ra input hoặc test case từ spec, model hoặc code.</td><td>"generate test inputs"</td></tr>
+<tr><td>Test data preparation tool</td><td>Tạo dữ liệu test, hoặc trích và chỉnh sửa dữ liệu từ database/file.</td><td>"manipulate databases and files to set up test data"</td></tr>
+<tr><td>Test execution tool</td><td>Chạy test tự động theo script. Kiểu capture/replay ghi lại thao tác người dùng rồi phát lại. Dùng nhiều nhất cho regression.</td><td>"record and play back", "run tests as a human would", "regression"</td></tr>
+<tr><td>Test harness / Unit test framework (D)</td><td><b>Giả lập môi trường</b> để test component chưa có giao diện, đóng vai stub và driver.</td><td>"simulating the environment in which the test object will run"</td></tr>
+<tr><td>Test comparator</td><td>So sánh actual với expected result.</td><td>"detect differences between actual and expected results"</td></tr>
+<tr><td>Coverage measurement tool (D)</td><td>Gắn thêm code đo (instrument) vào chương trình để đo xem phần nào đã được chạy (statement, branch…).</td><td>"instrumented code", "what was covered"</td></tr>
+<tr><td>Security testing tool</td><td>Tìm lỗ hổng bảo mật.</td><td>"vulnerabilities", "virus/attack"</td></tr>
+<tr><td>Dynamic analysis tool (D)</td><td>Theo dõi lúc chương trình <b>đang chạy</b>: <b>memory leak</b>, lỗi con trỏ.</td><td>"memory leaks", "pointer arithmetic", "run-time information"</td></tr>
+<tr><td>Performance / Load / Stress tool</td><td>Sinh tải giả lập và đo thời gian phản hồi.</td><td>"load generation", "response times under load"</td></tr>
+<tr><td>Monitoring tool</td><td>Theo dõi tài nguyên hệ thống liên tục: CPU, network.</td><td>"continuously monitor system resources"</td></tr>
+<tr><td>Debugging tool (D)</td><td>Cho phép chạy từng bước, đặt breakpoint, xem giá trị biến. Dùng để tìm nguyên nhân lỗi.</td><td>"single-stepping", "breakpoints"</td></tr>
+</table>
+
+<h3>6.2 Lưu ý đặc biệt với một số tool</h3>
+<table class="t">
+<tr><th style="width:22%">Thuật ngữ</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Capture / Replay</td><td>Ghi lại thao tác rồi phát lại. Script dễ hỏng khi giao diện hoặc dữ liệu thay đổi.</td><td>"recorded script", "unstable when UI changes"</td></tr>
+<tr><td>Data-driven</td><td>Tách <b>dữ liệu</b> ra file hoặc bảng tính. <b>Một</b> script chạy được với <b>nhiều</b> bộ dữ liệu.</td><td>"script run with several sets of test input data"</td></tr>
+<tr><td>Keyword-driven</td><td>Bảng tính chứa <b>action words (keywords)</b>, dữ liệu và expected result. Bảng này điều khiển việc chạy test, nên người không biết lập trình cũng dùng được.</td><td>"table with test input data, action words and expected results"</td></tr>
+<tr><td>Probe effect</td><td>Bản thân tool làm thay đổi hành vi hoặc kết quả đo của hệ thống, ví dụ coverage tool hay performance tool.</td><td>"intrusive", "tool affects the actual outcome"</td></tr>
+</table>
+<p>Thêm vài lưu ý: performance tool cần người có chuyên môn để thiết kế tải và phân tích kết quả. Khi áp dụng static analysis cho code cũ, sẽ có rất nhiều cảnh báo, nên lọc bớt và áp dụng dần. Test management tool cần kết nối được với các tool khác. Tự động hóa khó thành công chủ yếu vì <b>bảo trì hệ thống test (script) rất tốn công</b>.</p>
+
+<h3>6.3 Đưa tool vào tổ chức</h3>
+<table class="t">
+<tr><th style="width:22%">Giai đoạn</th><th style="width:40%">Nội dung (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>Chọn tool</td><td>Đánh giá mức độ trưởng thành của tổ chức, xác định chỗ cần cải tiến, đánh giá tool theo yêu cầu rõ ràng, làm <b>proof-of-concept</b>, đánh giá vendor, tính <b>ROI</b>.</td><td>"organization's maturity", "proof-of-concept", "return on investment"</td></tr>
+<tr><td>Pilot project</td><td>Học sâu về tool, xem tool có hợp với quy trình hiện có không, thống nhất cách dùng chuẩn (naming, lưu trữ), đánh giá lợi ích có xứng với chi phí không.<br><span class="no">KHÔNG phải mục tiêu của pilot:</span> giảm tỷ lệ lỗi.</td><td>"learn more about the tool", "fit with existing processes", "decide on standard ways", "benefits at reasonable cost"</td></tr>
+<tr><td>Success factors</td><td>Triển khai <b>dần dần</b>, điều chỉnh quy trình cho hợp với tool, có đào tạo và coaching, ban hành guideline, thu thập lessons learned từ mọi team, theo dõi lợi ích thu được.</td><td>"incremental roll-out", "training and coaching", "lessons learned"</td></tr>
+</table>
+
+<div class="trap"><b class="t">Bẫy đề chương 6</b>
+<ul>
+  <li>"Giả lập môi trường mà test object sẽ chạy": chọn <b>Test harness</b>.</li>
+  <li>"Traceability giữa requirement, test và bug": chọn <b>Test management tool</b>.</li>
+  <li>"Memory leak": chọn <b>Dynamic analysis</b>. "Coding standard, complexity": chọn <b>Static analysis</b>.</li>
+  <li>Không phải lợi ích của tool: "<b>dễ triển khai và bảo trì</b>" (thực tế là ngược lại).</li>
+  <li>Nguyên tắc đưa tool vào tổ chức: <b>pilot</b>, điều chỉnh quy trình, đào tạo, thu thập lessons learned (đáp án "2, 3, 4, 7"). <span class="no">Sai:</span> triển khai cho cả công ty cùng lúc, hoặc để mỗi team tự đặt chuẩn riêng.</li>
+</ul></div>
+</section>
+
+<!-- ============================ CÔNG THỨC ============================ -->
+<section class="ch" id="cf" style="--cc:#111">
+<h2>Tổng hợp công thức và con số</h2>
+<table>
+<tr><th style="width:34%">Công thức / số liệu</th><th>Nội dung</th><th style="width:10%">Chương</th></tr>
+<tr><td>Ví dụ exhaustive testing trong slide</td><td>20 màn hình × 4 menu × 3 lựa chọn × 10 trường × 2 kiểu nhập × 100 giá trị = <b>480,000 test</b>. Nếu mỗi test mất 1 giây thì tổng là khoảng 133 giờ, tức khoảng 17.7 ngày làm việc.</td><td>1</td></tr>
+<tr><td>Tự test code của mình</td><td>Chỉ tìm được khoảng <b>30–50%</b> lỗi.</td><td>1</td></tr>
+<tr><td>Pareto (defect clustering)</td><td>Khoảng <b>80%</b> lỗi nằm trong <b>20%</b> module.</td><td>1</td></tr>
+<tr><td>Review</td><td>Chi phí khoảng 5–15% công sức phát triển. Inspection đọc khoảng 1 trang/giờ. Hiệu quả tìm lỗi: review thường 10–20%, inspection đã trưởng thành 80–95%.</td><td>3</td></tr>
+<tr><td>Cyclomatic complexity</td><td><b>V(G) = số decision + 1 = E − N + 2</b></td><td>3, 4</td></tr>
+<tr><td>Statement coverage</td><td>statement đã chạy ÷ tổng statement × 100%</td><td>4</td></tr>
+<tr><td>Decision coverage</td><td>kết quả decision đã chạy ÷ tổng kết quả decision × 100%</td><td>4</td></tr>
+<tr><td>Quan hệ giữa các coverage</td><td>100% Decision ⇒ 100% Statement. Số test tối thiểu: Statement ≤ Decision ≤ V(G).</td><td>4</td></tr>
+<tr><td>BVA cho khoảng [a, b]</td><td>2 giá trị: a−1, a, b, b+1. 3 giá trị: a−1, a, a+1, b−1, b, b+1.</td><td>4</td></tr>
+<tr><td>Decision table</td><td>n điều kiện T/F thì có 2<sup>n</sup> rule.</td><td>4</td></tr>
+<tr><td>Số path khi có n IF nối tiếp</td><td>2<sup>n</sup></td><td>4</td></tr>
+<tr><td>Risk level</td><td><b>Likelihood × Impact</b></td><td>5</td></tr>
+<tr><td>DDP <small>(Defect Detection Percentage)</small></td><td>Số lỗi tìm được khi test ÷ (số lỗi tìm được khi test + số lỗi phát hiện sau đó) × 100%</td><td>5</td></tr>
+<tr><td>Số vòng test (iterations)</td><td>Thường cần 3–4 vòng test và sửa lỗi.</td><td>5</td></tr>
+</table>
+
+<div class="key"><b class="t">Mẹo làm trắc nghiệm ISTQB</b>
+<ul>
+  <li>Gạch chân các từ <b>NOT / EXCEPT / FALSE / MOST / BEST</b> trước khi chọn đáp án.</li>
+  <li>Đáp án dùng từ tuyệt đối như <i>always, never, prove, all, guarantee, necessarily</i> thường là <span class="no">sai</span>.</li>
+  <li>Khi đề mô tả đặc điểm mà không nêu tên, hãy dò cột <b>"Đề hay tả bằng cụm từ…"</b> trong các bảng ở trên.</li>
+  <li>Câu tính coverage: vẽ nhanh các nhánh, dùng <b>bảng tra số test tối thiểu</b>, rồi kiểm tra lại bằng Statement ≤ Decision ≤ V(G).</li>
+</ul></div>
+</section>
+</main>
+<script>
+(function(){
+  var b=document.getElementById('quiz');
+  b.addEventListener('click',function(){
+    var on=document.body.classList.toggle('quiz');
+    b.textContent='Tự kiểm tra: '+(on?'BẬT':'TẮT');
+    if(!on)document.querySelectorAll('table.t td.show').forEach(function(td){td.classList.remove('show')});
+  });
+  document.addEventListener('click',function(e){
+    if(!document.body.classList.contains('quiz'))return;
+    var td=e.target.closest('table.t td:nth-child(2)');
+    if(td)td.classList.toggle('show');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- TEMPLATE: replace every {{...}}. Delete these TEMPLATE comments in the final file. -->
+<title>{{CODE}} – Ôn tập gọn ({{SCOPE}})</title>
+<style>
+:root{
+  --bg:#f7f7f5; --card:#fff; --ink:#1d1d1f; --mute:#6b6b70; --line:#e3e3e0;
+  --c1:#2563eb; --c2:#0d9488; --c3:#7c3aed; --c4:#ea580c; --c5:#db2777; --c6:#16a34a;
+  --c7:#0891b2; --c8:#ca8a04; --c9:#4f46e5; --c10:#be123c;
+  --key:#fff7d6; --trap:#fdecec; --trapline:#e5484d;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+nav.top{position:sticky;top:0;z-index:9;background:#111;color:#fff;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 14px}
+nav.top a{color:#fff;text-decoration:none;padding:4px 10px;border-radius:999px;font-weight:600;font-size:13px;background:#2b2b2e}
+nav.top a:hover{background:#444}
+nav.top .sp{flex:1}
+#quiz{border:0;border-radius:999px;padding:5px 12px;font-weight:700;font-size:13px;cursor:pointer;background:#ffd84d;color:#111}
+main{max-width:1060px;margin:0 auto;padding:18px 16px 80px}
+header.hero h1{margin:6px 0 4px;font-size:26px}
+header.hero p{margin:4px 0;color:var(--mute)}
+.how{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 16px;margin:12px 0 4px}
+.how ol{margin:6px 0;padding-left:20px}
+section.ch{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 20px 18px;margin:22px 0;border-top:6px solid var(--cc)}
+section.ch>h2{margin:12px 0 4px;font-size:22px;color:var(--cc)}
+section.ch>h2 small{color:var(--mute);font-weight:500;font-size:14px}
+h3{margin:20px 0 6px;font-size:17px;border-left:4px solid var(--cc);padding-left:8px}
+h4{margin:12px 0 4px;font-size:15px}
+.key{background:var(--key);border-radius:10px;padding:8px 14px;margin:10px 0}
+.key b.t{display:block;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#8a6d00}
+.key ul,.trap ul{margin:4px 0;padding-left:20px}
+.trap{background:var(--trap);border-left:5px solid var(--trapline);border-radius:8px;padding:8px 14px;margin:14px 0}
+.trap b.t{display:block;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--trapline)}
+.trap li{margin:3px 0}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:6px 8px;vertical-align:top;text-align:left}
+th{background:#f0f0ee;font-size:13px}
+table.t td:first-child{font-weight:700;white-space:nowrap}
+table.t td:first-child small{display:block;font-weight:400;color:var(--mute);white-space:normal}
+table.t td:nth-child(3){color:#3b3b40;font-style:italic;font-size:13px}
+.ok{color:#15803d;font-weight:700}
+.no{color:#b91c1c;font-weight:700}
+.mn{display:inline-block;background:#eef2ff;color:#3730a3;border-radius:6px;padding:1px 8px;font-weight:700;font-size:13px}
+code,pre{font-family:Consolas,"Cascadia Mono",monospace;font-size:13px}
+pre{background:#f4f4f2;border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:6px 0;overflow:auto}
+.f{background:#f1f5ff;border:1px solid #c7d4fb;border-radius:10px;padding:8px 14px;margin:8px 0}
+.f div{margin:3px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.flow span{background:#f0f0ee;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-weight:600;font-size:13px}
+.flow i{color:var(--mute);font-style:normal}
+.vs td{text-align:center}
+.vs td.mid{color:var(--mute);border:0}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}table.t td:first-child{white-space:normal}}
+/* Self-quiz mode: blur column 2 of every .t table; click a cell to reveal */
+body.quiz table.t td:nth-child(2){color:transparent;text-shadow:0 0 9px rgba(0,0,0,.55);cursor:pointer;user-select:none}
+body.quiz table.t td:nth-child(2).show{color:inherit;text-shadow:none}
+@media print{
+  nav.top,#quiz,.how{display:none}
+  body{background:#fff;font-size:12px}
+  section.ch{break-before:page;border:0;padding:0}
+  table{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+<nav class="top">
+  <!-- TEMPLATE: one link per chapter, short label: "C1 <2-3 words>" -->
+  <a href="#c1">C1 {{SHORT}}</a>
+  <a href="#cf">Công thức</a>
+  <span class="sp"></span>
+  <button id="quiz" title="Che cột nghĩa tiếng Việt, bấm vào ô để lộ đáp án">Tự kiểm tra: TẮT</button>
+</nav>
+<main>
+<header class="hero">
+  <h1>{{CODE}} – Ôn tập gọn, {{SCOPE}}</h1>
+  <p>Tóm tắt từ {{SOURCES_ONE_LINE}}. Thuật ngữ giữ {{EXAM_LANGUAGE}} vì đề thi bằng {{EXAM_LANGUAGE}}.</p>
+</header>
+<div class="how">
+  <b>Cách dùng (đọc 1 lần):</b>
+  <ol>
+    <li>Mỗi chương bắt đầu bằng ô vàng <b>"Nhớ trong 30 giây"</b>. Nếu chỉ có 15 phút trước giờ thi, hãy đọc các ô vàng và các ô đỏ <b>"Bẫy đề"</b>.</li>
+    <li>Bảng thuật ngữ có 3 cột: <b>Thuật ngữ</b> | <b>Hiểu nhanh (VI)</b> | <b>Đề hay tả bằng cụm từ…</b>. Khi đề mô tả đặc điểm, hãy dò cột thứ 3 để tìm thuật ngữ.</li>
+    <li>Bấm nút vàng <b>"Tự kiểm tra"</b>: cột nghĩa sẽ bị che. Tự nói nghĩa, rồi bấm vào ô để xem đáp án.</li>
+  </ol>
+</div>
+
+<!-- ============================ CHƯƠNG 1 ============================
+TEMPLATE: copy this <section> per chapter. id="c<N>", --cc:var(--c<N>).
+Component order: key box → term tables (h3 per topic) → flows/comparisons/formulas → trap box.
+Delete components a chapter doesn't need. -->
+<section class="ch" id="c1" style="--cc:var(--c1)">
+<h2>Chương 1 – {{CHAPTER_TITLE_EXAM_LANG}} <small>{{CHAPTER_TITLE_VI}}</small></h2>
+
+<div class="key"><b class="t">Nhớ trong 30 giây</b>
+<ul>
+  <!-- ≤5 bullets: must-know lists, orders, formulas. Mnemonic for any list the exam asks to recall: -->
+  <li><b>{{N}} {{things}}</b>, câu thần chú: <span class="mn">{{Từ – Khóa – Đầu – Tiên}}</span></li>
+</ul></div>
+
+<h3>1.1 {{Topic}}</h3>
+<!-- Term table. Column 1 = term in EXAM language (synonyms in <small>). Column 2 = one short VI line,
+     bold the distinguishing word. Column 3 = cue phrases quoted from real questions/definitions. -->
+<table class="t">
+<tr><th style="width:22%">Thuật ngữ</th><th style="width:40%">Hiểu nhanh (VI)</th><th>Đề hay tả bằng cụm từ…</th></tr>
+<tr><td>{{Term}} <small>(= {{synonym}})</small></td><td>{{Giải thích 1 dòng, <b>từ phân biệt</b> in đậm.}}</td><td>"{{cue phrase 1}}", "{{cue phrase 2}}"</td></tr>
+</table>
+
+<!-- Ordered steps / process: -->
+<div class="flow"><span>1. {{Step}}</span><i>→</i><span>2. {{Step}}</span><i>→</i><span>3. {{Step}}</span></div>
+
+<!-- Pairing/comparison (e.g. left branch ↔ right branch). For "A vs B" confusions prefer a .t table with both rows. -->
+<table class="vs">
+<tr><th>{{Left}}</th><th></th><th>{{Right}}</th></tr>
+<tr><td>{{a}}</td><td class="mid">↔</td><td><b>{{b}}</b></td></tr>
+</table>
+
+<!-- Formula box: formula, then one worked example taken from a real exam question when possible. -->
+<div class="f">
+<div><b>{{Tên công thức}}</b> = {{formula}}</div>
+<div><b>Ví dụ (đề cũ):</b> {{bài}} → {{đáp án}} vì {{lý do 1 dòng}}.</div>
+</div>
+
+<!-- Code / worked problem side by side: -->
+<div class="grid2">
+<div><b>Ví dụ 1</b> (đáp án <b>{{x}}</b>)<pre>{{code or problem}}</pre>{{giải thích ngắn}}</div>
+<div><b>Ví dụ 2</b> (đáp án <b>{{y}}</b>)<pre>{{code or problem}}</pre>{{giải thích ngắn}}</div>
+</div>
+
+<div class="trap"><b class="t">Bẫy đề chương 1</b>
+<ul>
+  <!-- wrong belief → right answer. Use <span class="no">SAI</span> / <span class="ok">ĐÚNG</span>. -->
+  <li>"{{Phát biểu dễ chọn nhầm}}": <span class="no">SAI</span>. {{Đúng là…}}</li>
+</ul></div>
+</section>
+
+<!-- ============================ CÔNG THỨC / CON SỐ ============================ -->
+<section class="ch" id="cf" style="--cc:#111">
+<h2>Tổng hợp công thức và con số</h2>
+<table>
+<tr><th style="width:34%">Công thức / số liệu</th><th>Nội dung</th><th style="width:10%">Chương</th></tr>
+<tr><td>{{name}}</td><td><b>{{formula or number}}</b></td><td>1</td></tr>
+</table>
+<div class="key"><b class="t">Mẹo làm bài</b>
+<ul>
+  <!-- Tactics for THIS exam format (MCQ: NOT/EXCEPT, absolute words; essay: answer skeleton; calc: units/check). -->
+  <li>{{tip}}</li>
+</ul></div>
+</section>
+</main>
+<script>
+(function(){
+  var b=document.getElementById('quiz');
+  b.addEventListener('click',function(){
+    var on=document.body.classList.toggle('quiz');
+    b.textContent='Tự kiểm tra: '+(on?'BẬT':'TẮT');
+    if(!on)document.querySelectorAll('table.t td.show').forEach(function(td){td.classList.remove('show')});
+  });
+  document.addEventListener('click',function(e){
+    if(!document.body.classList.contains('quiz'))return;
+    var td=e.target.closest('table.t td:nth-child(2)');
+    if(td)td.classList.toggle('show');
+  });
+})();
+</script>
+</body>
+</html>
